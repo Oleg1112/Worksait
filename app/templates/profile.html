@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<h1>{{ user.username }}</h1>
+	<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+	<p class="lead">{{ user.email }}</p>
+	<p class="lead">
+		Здесь вы можете просмотреть свой профиль, все свои заказы и увидеть курсы, на которые подали заяку.
+	</p>
+</div>
+
+<section>
+	<h2>Записи на занятия</h2>
+
+	<hr />
+
+	{% if not enrollments %}
+	<p>Вы не записаны ни на одно занятие.</p>
+	<p><a href="{% url 'enroll' %}">Не упустите возможность</a></p>
+	{% endif %}
+
+	{% for enrollment in enrollments %}
+	<div class="order" style="border-color: {{ enrollment.color }};">
+		<h3>Курс "{{ enrollment.course.title }}" - <span style="color: {{ enrollment.color }}">{{ enrollment.status }}</sp></h3>
+
+		<p>Указанный телефон: {{ enrollment.phone }}</p>
+	</div>
+
+	<hr />
+	{% endfor %}
+</section>
+
+<section>
+	<h2>Заказы</h2>
+
+	<hr />
+
+	{% if not orders %}
+	<p>Вы не оставляли ни одного заказа.</p>
+	<p><a href="{% url 'store' %}">Купите что-нибудь</a></p>
+	{% endif %}
+
+	{% for order in orders %}
+	<div class="order" style="border-color: {{ order.color }};">
+		<h3>Заказ №{{ forloop.counter }} - <span style="color: {{ order.color }}">{{ order.status }}</sp></h3>
+
+		<p>{{ order.date }}</p>
+		<p>{{ order.sum }} ₽</p>
+
+		{% for product in order.products.all %}
+		<section class="row">
+			<div class="col-md-8 product">
+				<figure>
+					<img src="{{ product.image.url }}" alt="" />
+				</figure>
+
+				<div>
+					<h3>{{ product.title }}</h3>
+					<p>{{ product.price }} ₽</p>
+				</div>
+			</div>
+		</section>
+		{% endfor %}
+	</div>
+
+	<hr />
+	{% endfor %}
+</section>
+
+{% endblock %}

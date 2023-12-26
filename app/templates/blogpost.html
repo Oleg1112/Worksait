@@ -1,0 +1,42 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<article id="article">
+	<h1>{{post_1.title}}</h1>
+
+	<img src="{{ post_1.image.url }}" alt="Картинка статьи блога" width="200" />
+
+	<p>{{post_1.content|linebreaksbr}}</p>
+</article>
+
+<br>
+<p><a href="{% url 'blog' %}">Назад</a></p>
+<br>
+
+<h2>Комментарии</h2>
+
+{% if user.is_authenticated %}
+<form method="POST" id="commentForm">
+    {% csrf_token %}
+    <dif>
+        {{form.as_p}}
+        <button type="submit" class="save btn btn-default">Отправить комментарий</button>
+    </dif>
+</form>
+{% else %}
+<h4>Для добавления своего комментария, пожалуйста, авторизуйтесь</h4>
+{% endif %}
+
+<hr />
+{% for comment in comments %}
+<div class="comment {% if comment.author == request.user %}self{% endif %}">
+	<h5><span>{{comment.author}}</span> <time datetime="{{comment.date}}">{{comment.date}}</time></h5>
+	<p>{{comment.text|linebreaksbr}}</p>
+</div>
+<hr>
+{% endfor %}
+
+<p>
+    <a href="{% url 'blog' %}">Назад</a>
+</p>
+{% endblock %}

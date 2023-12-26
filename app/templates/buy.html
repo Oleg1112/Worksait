@@ -1,0 +1,87 @@
+{% if product.stock == 0 %}
+<iframe name="dummyframe" id="dummyframe" style="display: none !important;" hidden class="hidden"></iframe>
+
+<form class="form-inline cancel" action="/store/cancel/" method="post" target="dummyframe">
+	{% csrf_token %}
+	<input type="hidden" name="product_id" value="{{ product.id }}">
+	<button type="submit" class="btn btn-warning">
+		<p>Нет в наличии</p>
+	</button>
+</form>
+
+{% elif not user.is_authenticated %}
+<p class="btn btn-default" style="opacity: .5;" title="Пожалуйста, авторизуйтесь для покупки">{% if long %}Добавить в корзину{% else %}Купить{% endif %}</p>
+
+{% else %}
+<iframe name="dummyframe" id="dummyframe" style="display: none !important;" hidden class="hidden"></iframe>
+
+<div class="form-inline">
+	<input id="buy-checkbox-{{ product.id }}" class="buy-checkbox" {% if bought %}checked{% endif %} type="checkbox" hidden />
+
+	<form class="form-inline cancel" action="/store/cancel/" method="post" target="dummyframe">
+		{% csrf_token %}
+		<input type="hidden" name="product_id" value="{{ product.id }}">
+		<button type="submit" class="btn btn-primary">
+			<label for="buy-checkbox-{{ product.id }}">Добавлено{% if long %} в корзину{% endif %}</label>
+		</button>
+	</form>
+
+	<form class="form-inline buy" action="/store/buy/" method="post" target="dummyframe">
+		{% csrf_token %}
+		<input type="hidden" name="product_id" value="{{ product.id }}">
+		<button type="submit" class="btn btn-default">
+			<label for="buy-checkbox-{{ product.id }}">{% if long %}Добавить в корзину{% else %}Купить{% endif %}</label>
+		</button>
+	</form>
+
+	{% if cart %}
+	<form
+		class="form-inline control"
+		action="/store/dec/"
+		method="post"
+		target="dummyframe"
+		onsubmit="
+			let elem = document.getElementById('count-{{ product.id }}')
+			let count = parseInt(elem.innerHTML)
+			if (count == 0) return false
+
+			elem.innerHTML = parseInt(elem.innerHTML) - 1
+			const output = document.getElementById('cart-sum')
+			if (output) {
+				output.dataset.sum = parseInt(output.dataset.sum) - {{ product.price }}
+				output.innerHTML = 'Итого: ' + output.dataset.sum + ' ₽'
+			}
+		">
+
+		{% csrf_token %}
+		<input type="hidden" name="product_id" value="{{ product.id }}">
+		<button type="submit" class="btn btn-danger"><p>-</p></button>
+	</form>
+
+	{% for product_id, count in cart.data.items %}{% if product_id == product.id %}
+	<output id="count-{{ product.id }}" class="form-inline btn btn-default">{{ count }}</output>
+	<noscript>(на момент загрузки)</noscript>
+	{% endif %}{% endfor %}
+
+	<form
+		class="form-inline control"
+		action="/store/inc/"
+		method="post"
+		target="dummyframe"
+		onsubmit="
+			let elem = document.getElementById('count-{{ product.id }}')
+			elem.innerHTML = parseInt(elem.innerHTML) + 1
+			const output = document.getElementById('cart-sum')
+			if (output) {
+				output.dataset.sum = parseInt(output.dataset.sum) + {{ product.price }}
+				output.innerHTML = 'Итого: ' + output.dataset.sum + ' ₽'
+			}
+		">
+
+		{% csrf_token %}
+		<input type="hidden" name="product_id" value="{{ product.id }}">
+		<button type="submit" class="btn btn-success"><p>+</p></button>
+	</form>
+	{% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,283 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+.carousel-inner .item img {
+    width: 100%;
+    height: 600px;
+    margin: auto;
+    object-fit: cover;
+}
+
+
+.post {
+    transition: .25s;
+}
+.post:hover {
+    transform: translateX(10px);
+}
+
+
+#article {
+    min-height: 400px;
+    padding: 20px;
+    background: #eee;
+}
+
+#article p {
+    font-size: 16px;
+}
+
+#article img {
+    width: auto;
+    max-width: 500px;
+    max-height: 300px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    float: right;
+}
+
+#commentForm textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: auto !important;
+    max-width: none !important;
+    height: 120px;
+    min-height: 100px;
+    max-height: 400px;
+    padding: 6px;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.comment {
+    border-left: 4px solid #CCC;
+    padding: 8px 10px;
+}
+.comment.self {
+    border-left-color: #0098db;
+}
+.comment h5 {
+    margin-top: 0;
+    font-weight: bold;
+}
+.comment time {
+    color: #666;
+    font-weight: normal;
+}
+.comment p {
+    margin-bottom: 0;
+}
+
+
+.course-overview {
+    transition: .25s;
+}
+.course-overview:hover {
+    transform: translateX(10px);
+}
+
+#course {
+    padding: 0 10px;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-row > span {
+    font-size: 16px;
+    position: relative;
+}
+.info-row > .info-row-first + span ~ span::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 2px);
+    right: calc(100% + 5px);
+    transform: translateY(-50%) skewX(-10deg);
+    width: 1px;
+    height: 90%;
+    background: #666;
+}
+
+.info-row > .info-row-first {
+    font-weight: bold;
+}
+.info-row > .info-row-first::before {
+    display: none;
+}
+
+.page-header {
+    padding-bottom: 4px;
+    margin-top: 40px;
+    border-bottom: 1px solid #CCC;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.product {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.product > figure {
+    width: 120px;
+    height: 120px;
+}
+.product > figure > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    object-fit: cover;
+}
+.product > div {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    width: 200px;
+}
+.product h3 {
+    margin-top: 0;
+}
+
+
+#product {
+    min-height: 400px;
+    padding: 20px;
+    background: #eee;
+}
+
+#product h2 {
+    display: inline-block;
+}
+
+#product p {
+    font-size: 16px;
+}
+
+#product img {
+    width: auto;
+    max-width: 500px;
+    max-height: 300px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    float: right;
+}
+
+.form-inline {
+    display: inline;
+}
+
+.buy-checkbox {
+    display: none !important;
+}
+
+.buy-checkbox:not(:checked) ~ .cancel { display: none !important; }
+
+.buy-checkbox:checked ~ .buy { display: none !important; }
+
+.form-inline :is(form, button).btn {
+    padding: 0;
+    outline: none;
+}
+
+.form-inline .btn > :is(label, p) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 6px 12px;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.order {
+    padding-left: 8px;
+    border-left: 3px solid #CCC;
+}
+
+caption {
+    font-size: 24px;
+}
+
+
+@media screen and (max-width: 768px) {
+    table, caption, thead, tbody {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+        width: 100%;
+        border-top: 3px solid #666;
+    }
+
+    td, th {
+        display: block;
+        width: 100%;
+    }
+}

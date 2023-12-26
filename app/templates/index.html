@@ -1,0 +1,89 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Псковский футбол</h1>
+    <p class="lead">
+        Псковский футбол развивается как профессиональный, так и любительский.
+        Главная команда города готовится отыграть в этом сезоне в МРО Северо-Запад в КФК.
+        А любительский футбол набирает обороты, если раньше играло около 10 команд, сейчас состав участников насчитывает около 30 команд.
+    </p>
+    <p><a href="{% url 'about' %}" class="btn btn-primary btn-large">Узнать больше &raquo;</a></p>
+</div>
+
+{% if last_news %}
+<div class="row">
+	{% for blog in last_news %}
+    <div class="col-md-4">
+        <h2>{{ blog.title }}</h2>
+        <p>
+			{{ blog.descriprion }}
+        </p>
+        <p><a class="btn btn-default" href="{% url 'blogpost' parametr=blog.id %}">Узнать больше &raquo;</a></p>
+    </div>
+	{% endfor %}
+</div>
+{% endif %}
+
+{% load static %}
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+
+        <div class="item active">
+            <img src="/static/content/Pskov.jpg " alt="О нас" class="img-responsive" />
+
+            <div class="carousel-caption" role="option">
+                <p>
+                    <a class="btn btn-default" href="{% url 'about' %}">
+                        Расскажем больше о нас
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/static/content/komanda.jpg" alt="Отзыв" class="img-responsive" />
+
+            <div class="carousel-caption" role="option">
+                <p>
+                    <a class="btn btn-default" href="#">
+                        Ваше мнение важно для нас
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/static/content/lfl.jpg" alt="Блог" class="img-responsive" />
+
+            <div class="carousel-caption" role="option">
+                <p>
+                    <a class="btn btn-default" href="{% url 'blog' %}">
+                        Наш блог
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Назад</span>
+    </a>
+
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Далее</span>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<h1>{{ product.title }}</h1>
+</div>
+
+<article id="product">
+	<h2>Товар "{{ product.title }}"</h1>
+
+	<img src="{{ product.image.url }}" alt="Изображение продукта" width="200" />
+
+	<p>{{ product.content|linebreaksbr }}</p>
+
+	<hr />
+
+	<p class="info-row">
+		<span class="info-row-first">Категория:</span>
+		<span>{{ product.category.title }}</span>
+	</p>
+
+	<p class="info-row">
+		<span class="info-row-first">Стоимость:</span>
+		<span style="color: green">{{ product.price }} ₽</span>
+	</p>
+
+	{% include 'buy.html' with product=product user=user bought=bought long=True %}
+</article>
+
+<br>
+<p><a href="{% url 'store' %}">Назад</a></p>
+<br>
+
+{% endblock %}

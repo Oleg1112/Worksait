@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Управление</h1>
+    <p class="lead">
+		Здесь вы можете управлять заказами, новостями, занятиями и товарами.
+    </p>
+	{% if user.is_staff %}
+	<p><a href="/admin/" class="btn btn-primary btn-large">Администрирование</a></p>
+	{% endif %}
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<h2>Заказы и заявки</h2>
+
+		<a href="{% url 'manage_enrollments' %}" class="btn btn-primary btn-large">Управление заявками на курсы</a>
+		<a href="{% url 'manage_orders' %}" class="btn btn-primary btn-large">Управление заказами</a>
+	</div>
+
+	<div class="col-md-4">
+		<h2>Блог</h2>
+
+		<a href="{% url 'manage_blog' %}" class="btn btn-primary btn-large">Управление блогом</a>
+		<a href="{% url 'manage_new_post' %}" class="btn btn-success btn-large">Новая статья</a>
+	</div>
+
+	<div class="col-md-4">
+		<h2>Товары</h2>
+
+		<a href="{% url 'manage_products' %}" class="btn btn-primary btn-large">Управление товарами</a>
+		<a href="{% url 'manage_new_product' %}" class="btn btn-success btn-large">Новый товар</a>
+	</div>
+
+	<div class="col-md-4">
+		<h2>Курсы</h2>
+
+		<a href="{% url 'manage_courses' %}" class="btn btn-primary btn-large">Управление курсами</a>
+		<a href="{% url 'manage_new_course' %}" class="btn btn-success btn-large">Новый курс</a>
+	</div>
+</div>
+
+{% endblock %}

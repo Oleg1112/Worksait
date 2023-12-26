@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<h1>{{ course.title }}</h1>
+	<p class="lead">
+		Вы можете ознакомиться с курсом и записаться к нам на занятия по футболу.
+	</p>
+
+	<p class="lead">
+		Время когда можно записаться:
+		<br />
+		{% if course.start_date and course.fdate_date %}
+		{{ course.start_date }} - {{ course.fdate_date }}
+		{% elif course.start_date %}
+		Начиная с {{ course.start_date }}
+		{% elif course.fdate_date %}
+		До {{ course.fdate_date }}
+		{% else %}
+		В любое время
+		{% endif %}
+	</p>
+</div>
+
+<article id="course">
+	<h2>Курс "{{ course.title }}"</h1>
+
+	<p>{{ course.content|linebreaksbr }}</p>
+
+	<hr />
+
+	<p class="info-row">
+		<span class="info-row-first">Количество занятий:</span>
+		<span>
+			{% if course.lessons_count == 1 %}
+			Отдельное занятие
+			{% elif course.lessons_count != -1 %}
+			<span style="color: green">{{ course.lessons_count }}</span> занятий
+			{% else %}
+			Регулярное посещение
+			{% endif %}
+		</span>
+	</p>
+
+	<p class="info-row">
+		<span class="info-row-first">Стоимость:</span>
+		<span><span style="color: green">{{ course.price }} ₽</span> {% if course.lessons_count != 1 %}за занятие{% endif %}</span>
+		{% if course.full_course_price != -1 %}
+		<span>
+			<s style="color: red">{{ course.raw_sum }} ₽</s> <span style="color: green">{{ course.full_course_price }} ₽</span> за весь курс
+		</span>
+		{% endif %}
+	</p>
+
+	{% if user.is_authenticated %}
+	{% if enrolled %}
+	<p style="color: orange; font-size: 200%;">Вы уже подали заявку</p>
+	{% else %}
+	<hr />
+	<form action="/courses/enroll/" method="post" onsubmit="alert('Спасибо за заявку, мы рассмотрим её в ближайшее время и свяжемся с вами. Все ваши заявки видны в вашем профиле.')">
+		{% csrf_token %}
+		<input type="hidden" name="course_id" value="{{ course.id }}">
+		<input type="tel" name="phone" class="form-control" placeholder="Номер телефона" required>
+		<br />
+		<button type="submit" class="btn btn-primary">Подать заявку</button>
+	</form>
+	{% endif %}
+	{% endif %}
+</article>
+
+<br>
+<p><a href="{% url 'courses' %}">Назад</a></p>
+<br>
+
+{% endblock %}

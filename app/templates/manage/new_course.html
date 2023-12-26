@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Добавление курса</h1>
+</div>
+
+<h2>{{ title }}</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form action="/management/newcourse" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <h4>Опишите новый курс</h4>
+                <hr />
+                <div class="form-group">
+                    <label for="id_title" class="col-md-2 control-label">Заголовок</label>
+                    <div class="col-md-10">
+                        {{ form.title }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_content" class="col-md-2 control-label">Основное содержание</label>
+                    <div class="col-md-10">
+                        {{ form.content }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_price" class="col-md-2 control-label">Цена</label>
+                    <div class="col-md-10">
+                        {{ form.price }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_lessons_count" class="col-md-2 control-label">Количество занятий (-1 - регулярное)</label>
+                    <div class="col-md-10">
+                        {{ form.lessons_count }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_full_course_price" class="col-md-2 control-label">Цена за полный курс</label>
+                    <div class="col-md-10">
+                        {{ form.full_course_price }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_start_date" class="col-md-2 control-label">Начало</label>
+                    <div class="col-md-10">
+                        {{ form.start_date }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_fdate_date" class="col-md-2 control-label">Конец</label>
+                    <div class="col-md-10">
+                        {{ form.fdate_date }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="/" />
+                        <input type="submit" value="Сохранить" class="btn btn-default" />
+                    </div>
+                </div>
+                {% if form.errors %}
+                <p class="validation-summary-errors">Ошибка.</p>
+                {% endif %}
+            </form>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load static %}
+<script src="{% static 'scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}

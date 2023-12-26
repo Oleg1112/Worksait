@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<h1>Корзина</h1>
+	<p class="lead">
+		Здесь вы можете просмотреть свою корзину, подкорректировать количество и оформить заказ.
+		Также вы можете <a href="{% url 'store' %}">продолжить покупки в магазине</a>.
+	</p>
+</div>
+
+<article id="course">
+	{% for product in cart.products.all %}
+	<div class="row">
+		<div class="col-md-8 product">
+			<figure>
+				<img src="{{ product.image.url }}" alt="" />
+			</figure>
+
+			<div>
+				<h3>{{ product.title }}</h3>
+				<p>
+					{{ product.price }} ₽
+				</p>
+				<div>
+					<a class="btn btn-default" href="{% url 'product' parametr=product.id %}">Узнать больше &raquo;</a>
+					{% include 'buy.html' with product=product user=user bought=True long=True %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	{% if user.is_authenticated %}
+	<br />
+	<hr />
+
+	<form action="/store/place/" method="post" onsubmit="alert('Спасибо за оформление заказа, мы рассмотрим её в ближайшее время и свяжемся с вами. Все заказы видны в вашем профиле.')">
+		{% csrf_token %}
+		<output id="cart-sum" data-sum="{{ cart.sum }}" class="form-inline btn btn-default">Итого: {{ cart.sum }} ₽</output>
+		<br /><br />
+		<button type="submit" class="btn btn-primary">Оформить заказ</button>
+	</form>
+	{% endif %}
+</article>
+
+{% endblock %}

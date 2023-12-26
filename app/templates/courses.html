@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="jumbotron">
+	<h1>Занятия по футболу</h1>
+	<p class="lead">
+		Здесь вы можете записаться к нам на занятия по футболу.
+	</p>
+</div>
+
+<br />
+{% for course in courses %}
+<hr />
+<div class="course-overview">
+<h2>{{ course.title }}</h2>
+
+<h4>
+	{% if course.start_date and course.fdate_date %}{{ course.start_date }} - {{ course.fdate_date }}
+	{% elif course.start_date %}Начиная с {{ course.start_date }}
+	{% elif course.fdate_date %}До {{ course.fdate_date }}
+	{% else %}В любое время
+	{% endif %}
+</h4>
+
+<p>
+	<span>
+		{% if course.lessons_count == 1 %}Отдельное занятие,
+		{% elif course.lessons_count != -1 %}<span style="color: green;">{{ course.lessons_count }}</span> занятий,
+		{% else %}Регулярное посещение,
+		{% endif %}
+	</span>
+
+	<span>
+		<span style="color: green;">{{ course.price }} ₽</span> {% if course.lessons_count != 1 %}за занятие{% endif %}
+		{% if course.full_course_price != -1 %} / <span style="color: green;">{{ course.full_course_price }} ₽</span> за весь курс{% endif %}
+	</span>
+</p>
+
+{% if course.enrolled %}
+<p style="color: orange; font-size: 120%;">Вы уже подали заявку</p>
+{% endif %}
+
+<p><a href="{% url 'course' parametr=course.id %}"> ПОДРОБНЕЕ </a> </p>
+</div>
+{% endfor %}
+{% endblock %}

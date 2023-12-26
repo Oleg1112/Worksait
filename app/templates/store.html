@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Магазин</h1>
+    <p class="lead">
+		Здесь вы можете купить всё что угодно, начиная от одежды и обуви и заканчивая спортивным инвентарём.
+		После покупок продолжите оформление в <a href="{% url 'cart' %}">корзине</a>.
+    </p>
+	<p>Категории:</p>
+	{% for category in categories %}
+	<p><a href="#{{ category.id }}">{{ category.title }}</a></p>
+	{% endfor %}
+</div>
+
+{% for category in categories %}
+<h2 id="{{ category.id }}" class="page-header">{{ category.title }}</h2>
+
+<div class="row">
+	{% for product in products %}{% if product.category.id == category.id %}
+    <div class="col-md-6 product" {% if product.stock == 0 %}style="opacity: 0.5;"{% endif %}>
+		<figure>
+			<img src="{{ product.image.url }}" alt="" />
+		</figure>
+
+		<div>
+			<h3>{{ product.title }}</h3>
+			<p>
+				{{ product.price }} ₽
+			</p>
+			<div>
+				<a class="btn btn-default" href="{% url 'product' parametr=product.id %}">Узнать больше &raquo;</a>
+				{% include 'buy.html' with product=product user=user bought=product.bought long=False %}
+			</div>
+		</div>
+    </div>
+	{% endif %}{% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Добавление поста</h1>
+</div>
+
+<h2>{{ title }}</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form action="/management/newpost" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <h4>Напишите новую статью</h4>
+                <hr />
+                <div class="form-group">
+                    <label for="id_title" class="col-md-2 control-label">Заголовок</label>
+                    <div class="col-md-10">
+                        {{ form.title }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_descriprion" class="col-md-2 control-label">Описание</label>
+                    <div class="col-md-10">
+                        {{ form.descriprion }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_content" class="col-md-2 control-label">Основное содержание</label>
+                    <div class="col-md-10">
+                        {{ form.content }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_image" class="col-md-2 control-label">Изображение</label>
+                    <div class="col-md-10">
+                        {{ form.image }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="/" />
+                        <input type="submit" value="Сохранить" class="btn btn-default" />
+                    </div>
+                </div>
+                {% if form.errors %}
+                <p class="validation-summary-errors">Ошибка.</p>
+                {% endif %}
+            </form>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load static %}
+<script src="{% static 'scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}

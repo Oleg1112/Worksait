@@ -1,0 +1,13 @@
+{%extends "layout.html"%}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>ошибка 404</h1>
+    <p class="lead">
+        Похоже, такой страницы который вы искали тут нет. Попробуйте перейти на <a href="{% url 'home' %}">главную</a>.
+    </p>
+    <p><a href="{% url 'home' %}" class="btn btn-primary btn-large">Вернуться на главную</a></p>
+</div>
+
+{% endblock %}

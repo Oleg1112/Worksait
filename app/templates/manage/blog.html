@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Управление блогом</h1>
+</div>
+
+<iframe id="dummyframe" name="dummyframe" style="display: none;" hidden></iframe>
+
+
+<table class="table table-striped table-bordered table-hover">
+	<caption>Новости</caption>
+
+	<colgroup>
+		<col width="40px">
+		<col width="200px">
+		<col>
+		<col width="200px">
+	</colgroup>
+
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Заголовок</th>
+			<th>Текст</th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for post in blog %}
+		<tr id="tr-{{ post.id }}">
+			<td>{{ post.id }}</td>
+			<td>
+				<input form="form-{{ post.id }}" type="text" name="title" class="form-control" value="{{ post.title }}">
+			</td>
+			<td>
+				<textarea form="form-{{ post.id }}" name="content" class="form-control" style="width: 100%; resize: vertical; min-height: 100px; max-width: none;">{{ post.content }}</textarea>
+			</td>
+			<td>
+				<form id="form-{{ post.id }}" class="form-inline" action="/manage/blog/{{ post.id }}/change" method="post" target="dummyframe">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-success" style="padding: 6px 12px;">Изменить</button>
+				</form>
+				<form
+				class="form-inline"
+				action="/manage/blog/{{ post.id }}/delete"
+				method="post"
+				target="dummyframe"
+				onsubmit="
+					if (!confirm('Вы уверены, что хотите удалить этот пост?')) return false
+					else setTimeout(() => { document.getElementById('tr-{{ post.id }}').remove() }, 100)
+				">
+
+					{% csrf_token %}
+					<button type="submit" class="btn btn-danger" style="padding: 6px 12px;">Удалить</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
